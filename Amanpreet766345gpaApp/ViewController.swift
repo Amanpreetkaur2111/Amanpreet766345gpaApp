@@ -10,6 +10,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    var StudDelegate: studentTableViewController?
+    
     @IBOutlet weak var firstNameField: UITextField!
     
     
@@ -27,14 +29,43 @@ class ViewController: UIViewController {
 
     @IBAction func SaveAction(_ sender: UIButton) {
         
-        let Fname = firstNameField.text
-        let Lname = lastNameField.text
-        let Sid  =  studentId.text
         
-        let Stud = students(firstName: Fname!, lastName: Lname!, studId: Sid!)
         
-        students.StudentsSave.append(Stud)
+let alert = UIAlertController(title: "Alert", message: "Are you Sure", preferredStyle: .alert)
         
+let Noaction = UIAlertAction(title: "Yes", style: .cancel, handler: nil)
+ let Yesaction = UIAlertAction(title: "Yes", style: .default){ (action) in
+let AlertController = UIAlertController(title: "New Contact Saved", message:"\(self.firstNameField.text) is now a New Student", preferredStyle: .alert)
+    
+    let OkAction = UIAlertAction(title: "OK", style: .default) {
+        (action) in
+    
+    var Fname = self.firstNameField.text
+    var Lname = self.lastNameField.text
+    var Sid  =  self.studentId.text
+           
+           let Stud = students(firstName: Fname!, lastName: Lname!, studId: Sid!)
+           
+           students.StudentsSave.append(Stud)
+           
+           self.firstNameField.text = ""
+           self.lastNameField.text = ""
+           self.studentId.text = ""
+        }
+        
+AlertController.addAction(OkAction)
+        self.present(AlertController,animated: true,completion: nil)
+
+  }
+        
+        alert.addAction(Noaction)
+        alert.addAction(Yesaction)
+        self.present(alert,animated: true,completion: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        StudDelegate?.tableView.reloadData()
     }
 }
 
