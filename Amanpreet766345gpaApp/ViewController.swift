@@ -9,6 +9,15 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    @IBOutlet weak var firstNameField: UITextField!
+    
+    
+    @IBOutlet weak var lastNameField: UITextField!
+    
+    
+    @IBOutlet weak var studentId: UITextField!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,5 +25,16 @@ class ViewController: UIViewController {
     }
 
 
+    @IBAction func SaveAction(_ sender: UIButton) {
+        
+        let Fname = firstNameField.text
+        let Lname = lastNameField.text
+        let Sid  =  studentId.text
+        
+        let Stud = students(firstName: Fname!, lastName: Lname!, studId: Sid!)
+        
+        students.StudentsSave.append(Stud)
+        
+    }
 }
 
